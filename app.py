@@ -2,8 +2,6 @@ import streamlit as st
 import plotly.graph_objs as go
 import datetime
 import yfinance as yf
-from streamlit_extras.app_logo import add_logo
-from PIL import Image
 
 def calculer_prix_tshirt(prix_initial_bitcoin, prix_initial_tshirt, prix_actuel_bitcoin):
     taux_variation_bitcoin = (prix_actuel_bitcoin - prix_initial_bitcoin) / prix_initial_bitcoin
@@ -100,7 +98,7 @@ with col1:
 
 # Ajouter l'image à droite du graphique
 with col2:
-    image = st.image("https://st3.depositphotos.com/1311476/17107/i/450/depositphotos_171075154-stock-photo-golden-bitcoin-souvenir-coin.jpg",width=100)
+    st.image("https://st3.depositphotos.com/1311476/17107/i/450/depositphotos_171075154-stock-photo-golden-bitcoin-souvenir-coin.jpg",width=100)
 
 # Afficher le bouton "Acheter" avec un lien d'achat différent pour chaque t-shirt
 st.markdown(f'<center><a href="{liens_achat_tshirts[index_tshirt]}">Acheter maintenant ({dernier_prix_tshirt} €)</a></center>', unsafe_allow_html=True)
