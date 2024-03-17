@@ -69,7 +69,7 @@ expander.markdown(f"""
 """, unsafe_allow_html=True)
 
 # Télécharger les données historiques du Bitcoin
-data = yf.download("BTC-USD", start=datetime.datetime.now() - datetime.timedelta(days=180), end=datetime.datetime.now())
+data = yf.download("BTC-USDT", start=datetime.datetime.now() - datetime.timedelta(days=180), end=datetime.datetime.now())
 
 # Calculer l'évolution du prix du t-shirt
 dates = data.index
@@ -86,7 +86,7 @@ fig = go.Figure(data=[go.Candlestick(x=dates,
                 low=data['Low'],
                 close=data['Close'])])
 
-fig.update_layout(title=f'Évolution du prix du {tshirt_selectionne} en fonction du prix du Bitcoin', xaxis_title='Date', yaxis_title='Prix du t-shirt (€)')
+fig.update_layout(title=f'Évolution du prix du Bitcoin', xaxis_title='Date', yaxis_title='Prix du t-shirt (USDT)')
 
 # Supprimer le volume en dessous du graphique
 fig.update_layout(xaxis_rangeslider_visible=False, showlegend=False)
