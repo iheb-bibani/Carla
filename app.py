@@ -86,7 +86,7 @@ fig = go.Figure(data=[go.Candlestick(x=dates,
                 low=data['Low'],
                 close=data['Close'])])
 
-fig.update_layout(title=f'Évolution du prix du Bitcoin', xaxis_title='Date', yaxis_title='Prix du t-shirt ($)')
+fig.update_layout(title=f'Évolution du prix du Bitcoin', xaxis_title='Date', yaxis_title='Prix du bitcoin ($)')
 
 # Supprimer le volume en dessous du graphique
 fig.update_layout(xaxis_rangeslider_visible=False, showlegend=False)
