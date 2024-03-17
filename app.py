@@ -2,6 +2,10 @@ import streamlit as st
 import plotly.graph_objs as go
 import datetime
 import yfinance as yf
+import webbrowser
+
+def open_url(url):
+    webbrowser.open_new_tab(url)
 
 def calculer_prix_tshirt(prix_initial_bitcoin, prix_initial_tshirt, prix_actuel_bitcoin):
     taux_variation_bitcoin = (prix_actuel_bitcoin - prix_initial_bitcoin) / prix_initial_bitcoin
@@ -47,6 +51,7 @@ liens_achat_tshirts = [
     "https://leonilagnado.wixsite.com/carla/product-page/tshirt-9",
     "https://leonilagnado.wixsite.com/carla/product-page/tshirt-10"
 ]
+
 
 # Sélection du t-shirt à afficher
 tshirt_selectionne = st.selectbox("Sélectionnez un t-shirt :", noms_tshirts)
@@ -108,7 +113,7 @@ with col2:
 # Afficher le graphique
 st.plotly_chart(fig)
 
-col1, col2,col3 = st.columns(3)
-
+col1, col2, col3 = st.columns(3)
 with col2:
-    st.button(f'Buy now at ({dernier_prix_tshirt} €)', on_click=liens_achat_tshirts[index_tshirt])
+    st.button(f'Buy now at ({dernier_prix_tshirt} €)', on_click=open_url, args=(liens_achat_tshirts[index_tshirt],))
+
