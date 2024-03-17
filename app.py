@@ -86,19 +86,29 @@ fig = go.Figure(data=[go.Candlestick(x=dates,
                 low=data['Low'],
                 close=data['Close'])])
 
-fig.update_layout(title=f'Évolution du prix du Bitcoin', xaxis_title='Date', yaxis_title='Prix du bitcoin ($)')
+fig.update_layout(title=f'Évolution du prix du Bitcoin', xaxis_title='Date', yaxis_title='Prix du Bitcoin (s)')
 
 # Supprimer le volume en dessous du graphique
 fig.update_layout(xaxis_rangeslider_visible=False, showlegend=False)
 
-# Afficher le graphique
-col1, col2 = st.columns([3, 1])
-with col1:
-    st.plotly_chart(fig)
+# Définir la mise en page du graphique
+fig.update_layout(
+    title='Évolution du prix du T-shirt et du Bitcoin',
+    xaxis_title='Date',
+    yaxis_title='Prix',
+    hovermode='closest'
+)
 
-# Ajouter l'image à droite du graphique
+# Définir les widgets st.metric
+col1, col2,col3 = st.columns(3)
+
 with col2:
-    st.image("https://st3.depositphotos.com/1311476/17107/i/450/depositphotos_171075154-stock-photo-golden-bitcoin-souvenir-coin.jpg",width=100)
+    bitcoin_metric = st.metric(label="Prix Bitcoin/T-shirt", value=round(data['Close'][-1],2), delta=dernier_prix_tshirt)
 
-# Afficher le bouton "Acheter" avec un lien d'achat différent pour chaque t-shirt
-st.markdown(f'<center><a href="{liens_achat_tshirts[index_tshirt]}">Acheter maintenant ({dernier_prix_tshirt} €)</a></center>', unsafe_allow_html=True)
+# Afficher le graphique
+st.plotly_chart(fig)
+
+col1, col2,col3 = st.columns(3)
+
+with col2:
+    st.button(f'Buy now at ({dernier_prix_tshirt} €)', on_click=liens_achat_tshirts[index_tshirt])
