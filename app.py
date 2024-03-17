@@ -2,6 +2,8 @@ import streamlit as st
 import plotly.graph_objs as go
 import datetime
 import yfinance as yf
+from streamlit_extras.app_logo import add_logo
+from PIL import Image
 
 def calculer_prix_tshirt(prix_initial_bitcoin, prix_initial_tshirt, prix_actuel_bitcoin):
     taux_variation_bitcoin = (prix_actuel_bitcoin - prix_initial_bitcoin) / prix_initial_bitcoin
@@ -68,10 +70,6 @@ expander.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-
-
-
-
 # Télécharger les données historiques du Bitcoin
 data = yf.download("BTC-USD", start=datetime.datetime.now() - datetime.timedelta(days=180), end=datetime.datetime.now())
 
@@ -83,13 +81,26 @@ prix_tshirt_history = [calculer_prix_tshirt(prix_initial_bitcoin, prix_initial_t
 # Dernier prix du t-shirt
 dernier_prix_tshirt = round(prix_tshirt_history[-1], 2)
 
-# Création du graphique avec Plotly
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=dates, y=prix_tshirt_history, mode='lines', name=f'Évolution du prix du {tshirt_selectionne}', line=dict(color='blue', width=2)))
+# Création du graphique avec Plotly (Chandeliers japonais)
+fig = go.Figure(data=[go.Candlestick(x=dates,
+                open=data['Open'],
+                high=data['High'],
+                low=data['Low'],
+                close=data['Close'])])
+
 fig.update_layout(title=f'Évolution du prix du {tshirt_selectionne} en fonction du prix du Bitcoin', xaxis_title='Date', yaxis_title='Prix du t-shirt (€)')
 
-# Affichage du graphique
-st.plotly_chart(fig, use_container_width=True)
+# Supprimer le volume en dessous du graphique
+fig.update_layout(xaxis_rangeslider_visible=False, showlegend=False)
+
+# Afficher le graphique
+col1, col2 = st.columns([3, 1])
+with col1:
+    st.plotly_chart(fig)
+
+# Ajouter l'image à droite du graphique
+with col2:
+    image = st.image("https://st3.depositphotos.com/1311476/17107/i/450/depositphotos_171075154-stock-photo-golden-bitcoin-souvenir-coin.jpg",width=100)
 
 # Afficher le bouton "Acheter" avec un lien d'achat différent pour chaque t-shirt
 st.markdown(f'<center><a href="{liens_achat_tshirts[index_tshirt]}">Acheter maintenant ({dernier_prix_tshirt} €)</a></center>', unsafe_allow_html=True)
