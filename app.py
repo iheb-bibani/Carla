@@ -115,11 +115,8 @@ st.plotly_chart(fig)
 
 col1, col2, col3 = st.columns(3)
 with col2:
-    button_clicked = st.button(f'Buy now at ({dernier_prix_tshirt} €)')
-    if button_clicked:
-        js = f"window.open('{liens_achat_tshirts[index_tshirt]}')"  # JavaScript pour ouvrir le lien dans un nouvel onglet
-        html = '<img src onerror="{}">'.format(js)  # Utiliser une image vide pour déclencher le JavaScript
-        st.markdown(html, unsafe_allow_html=True)
+    st.markdown(f'<a href="{liens_achat_tshirts[index_tshirt]}" target="_blank"><button>Buy now at ({dernier_prix_tshirt} €)</button></a>', unsafe_allow_html=True)
+
 
 
 
