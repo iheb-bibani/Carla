@@ -115,5 +115,10 @@ st.plotly_chart(fig)
 
 col1, col2, col3 = st.columns(3)
 with col2:
-    st.button(f'Buy now at ({dernier_prix_tshirt} €)', on_click=open_url, args=(liens_achat_tshirts[index_tshirt],))
+    try:
+        st.button(f'Buy now at ({dernier_prix_tshirt} €)', on_click=lambda: open_url(liens_achat_tshirts[index_tshirt]))
+    except:
+        st.markdown(f'<a href="{liens_achat_tshirts[index_tshirt]}" target="_blank"><button>Buy now at ({dernier_prix_tshirt} €)</button></a>', unsafe_allow_html=True)
+
+
 
